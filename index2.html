@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auto Machinery Engineering eBook (30 Chapters)</title>
+
+<style>
+:root{
+--bg:#f4f6fa;
+--card:#ffffff;
+--text:#111;
+--accent:#0066ff;
+--nav:#0f172a;
+}
+
+.dark{
+--bg:#0b1220;
+--card:#1e293b;
+--text:#f1f5f9;
+--accent:#38bdf8;
+--nav:#020617;
+}
+
+body{
+margin:0;
+font-family:Arial;
+background:var(--bg);
+color:var(--text);
+line-height:1.7;
+scroll-behavior:smooth;
+}
+
+#progress{
+position:fixed;
+top:0;
+left:0;
+height:5px;
+background:var(--accent);
+width:0%;
+z-index:9999;
+}
+
+nav{
+position:sticky;
+top:0;
+background:var(--nav);
+color:white;
+padding:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+z-index:999;
+}
+
+nav input{
+padding:6px;
+border:none;
+border-radius:5px;
+width:180px;
+}
+
+nav button{
+padding:6px 10px;
+border:none;
+border-radius:5px;
+background:var(--accent);
+color:white;
+cursor:pointer;
+margin-left:5px;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+padding:20px;
+}
+
+.cover{
+height:90vh;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
+background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
+url('https://images.unsplash.com/photo-1503376780353-7e6692767b70');
+background-size:cover;
+}
+
+.chapter{
+background:var(--card);
+padding:20px;
+margin:20px 0;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.chapter h2{
+color:var(--accent);
+cursor:pointer;
+}
+
+.content{display:block;}
+
+.toc{
+background:var(--card);
+padding:15px;
+border-radius:10px;
+margin:20px 0;
+}
+
+.toc a{
+display:block;
+text-decoration:none;
+color:var(--accent);
+margin:5px 0;
+}
+
+.quiz{
+background:#f0f0f0;
+padding:10px;
+margin-top:10px;
+border-radius:8px;
+}
+
+.dark .quiz{background:#0f172a;}
+
+@media(max-width:768px){
+nav{flex-direction:column;gap:10px;}
+}
+</style>
+</head>
+
+<body>
+
+<div id="progress"></div>
+
+<nav>
+<b>Auto Machinery eBook</b>
+<div>
+<input id="search" placeholder="Search chapters...">
+<button onclick="toggleTheme()">Theme</button>
+<button onclick="window.print()">PDF</button>
+</div>
+</nav>
+
+<div class="cover">
+<div>
+<h1>Auto Machinery Engineering</h1>
+<p>Complete 30-Chapter Automotive Systems Textbook</p>
+</div>
+</div>
+
+<div class="container">
+
+<!-- TOC -->
+<div class="toc">
+<h3>Table of Contents (30 Chapters)</h3>
+<div id="tocList"></div>
+</div>
+
+<!-- ================= CHAPTER TEMPLATE ================= -->
+
+<script>
+const chapters = [
+"Introduction to Automotive Machinery",
+"Automotive History",
+"Engineering Fundamentals",
+"Engine Basics",
+"Engine Components",
+"Fuel Systems",
+"Air Intake Systems",
+"Exhaust Systems",
+"Cooling Systems",
+"Lubrication Systems",
+"Transmission Systems",
+"Clutch Systems",
+"Drivetrain Systems",
+"Suspension Systems",
+"Steering Systems",
+"Brake Systems",
+"Electrical Systems",
+"Battery & Charging Systems",
+"Sensors & Actuators",
+"ECU & Engine Control",
+"Diagnostics (OBD Systems)",
+"Hybrid Vehicles",
+"Electric Vehicles",
+"Autonomous Vehicles",
+"Safety Systems",
+"Manufacturing Processes",
+"CNC & Machining",
+"Robotics in Automotive Industry",
+"Maintenance & Repair",
+"Future Automotive Technology"
+];
+
+let toc = document.getElementById("tocList");
+let container = document.querySelector(".container");
+
+chapters.forEach((title,i)=>{
+
+// TOC
+toc.innerHTML += `<a href="#c${i+1}">${i+1}. ${title}</a>`;
+
+// Chapters
+container.innerHTML += `
+<div class="chapter" id="c${i+1}">
+<h2 onclick="toggle(this)">${i+1}. ${title}</h2>
+<div class="content">
+
+<p>
+This chapter explains the fundamental principles of ${title.toLowerCase()},
+including system design, function, operation, and real-world automotive applications.
+</p>
+
+<h3>Key Concepts</h3>
+<ul>
+<li>System structure and function</li>
+<li>Mechanical and electronic components</li>
+<li>Operational principles</li>
+<li>Industry applications</li>
+</ul>
+
+<h3>Study Focus</h3>
+<p>
+Understanding this system is essential for automotive engineering,
+diagnostics, and maintenance work.
+</p>
+
+<div class="quiz">
+<b>Quick Question:</b><br>
+What is the importance of ${title.toLowerCase()}?<br><br>
+<button onclick="alert('Answer varies depending on system function')">Show Answer</button>
+</div>
+
+</div>
+</div>
+`;
+});
+</script>
+
+</div>
+
+<script>
+
+/* Theme */
+function toggleTheme(){
+document.body.classList.toggle("dark");
+}
+
+/* Collapse */
+function toggle(el){
+let c = el.nextElementSibling;
+c.style.display = (c.style.display==="none")?"block":"none";
+}
+
+/* Search */
+document.addEventListener("input", e=>{
+if(e.target.id==="search"){
+let val = e.target.value.toLowerCase();
+document.querySelectorAll(".chapter").forEach(ch=>{
+ch.style.display =
+ch.innerText.toLowerCase().includes(val)?"block":"none";
+});
+}
+});
+
+/* Progress */
+window.onscroll = ()=>{
+let scrolled = (document.documentElement.scrollTop /
+(document.documentElement.scrollHeight -
+document.documentElement.clientHeight)) * 100;
+document.getElementById("progress").style.width = scrolled + "%";
+};
+
+</script>
+
+</body>
+</html>
